@@ -8,7 +8,7 @@ def main():
 
     
     st.sidebar.header('Dataset to use')
-    page = st.sidebar.selectbox("Format", ['Default','User Upload'])
+    page = st.sidebar.selectbox("Data Input", ['Default','User Upload'])
     model =load_model('ccFraud')
 
     if page == 'Default':
