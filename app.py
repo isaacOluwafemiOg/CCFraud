@@ -1,24 +1,20 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
-from PIL import Image
-from pycaret.classification import *
+from pycaret.classification import predict_model,load_model
 
 
 def main():
 
     
-    #imag=Image.open('forexWithML.png')
-    #st.image(imag,use_column_width=True)
     st.sidebar.header('Dataset to use')
     page = st.sidebar.selectbox("Format", ['Default','User Upload'])
-    model =load_model('ccFraud.pkl')
+    model =load_model('ccFraud')
 
     if page == 'Default':
         st.title('Predicting Default Test Data')
         st.subheader('Dataset Preview')
-        test = pd.read_csv('test.csv',index_col='ID')
+        test = pd.read_csv('test.csv').head(10)
         test
 
         prediction=predict_model(model,test)
@@ -47,10 +43,6 @@ def main():
             st.write('No dataset Uploaded')
         
     
-
-@st.cache
-def load_model(a):
-    return pickle.load(open(a,'rb'))
 
 if __name__ == '__main__':
     main()
