@@ -73,7 +73,9 @@ def main():
             pred_view.columns = ['Prediction']
             
             pred_view['Prediction'] = np.where(pred_view['Prediction']==0,'Genuine','Fraud')
-
+            
+            pred_view
+            
             #f1= f1_score(test['is_fraud'],predic)
             #st.subheader('F1 Score')
             #f1
