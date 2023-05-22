@@ -35,7 +35,7 @@ def predict_test(pdata):
 def prepare(test):
     preprocessor = pickle.load(open('process.pkl','rb'))
     X = test.drop('is_fraud',axis=1)
-    data = pd.DataFrame(preprocessor.fit_transform(X))
+    data = pd.DataFrame(preprocessor.transform(X))
     
     return (data)
 
