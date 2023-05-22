@@ -70,8 +70,8 @@ def main():
             predic
 
             f1= f1_score(test['is_fraud'],predic)
-            st.subheader('F1 Score')
-            f1
+            #st.subheader('F1 Score')
+            #f1
         st.write('''***''')
 
 
