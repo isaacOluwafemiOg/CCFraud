@@ -9,7 +9,7 @@ import xgboost
 
 @st.cache_data
 def train_model():
-    test = pd.read_csv('test.csv')
+    test = pd.read_csv('test.csv',nrows=39720)
     data = pd.read_csv('train.csv')
     model =pickle.load(open('trained_model.pkl','rb'))
     
@@ -53,8 +53,6 @@ def main():
     st.write('train f1 score:', trainscore)
     st.write('test f1 score:', testscore)
 
-    v= X_test.shape
-    v
     if page == 'Default':
         st.header('Predicting Default Test Data')
         st.subheader('Dataset Preview')
@@ -65,8 +63,6 @@ def main():
             with st.spinner("Preparing data... Please wait."):
                 pdata = prepare(test)
                 
-            q =pdata.shape
-            q
             with st.spinner("Predicting... Please wait."):
                 predic = predict_test(pdata)
 
