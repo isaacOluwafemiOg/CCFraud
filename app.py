@@ -68,7 +68,7 @@ def main():
                 predic = predict_test(pdata)
 
             st.subheader('Results')
-            pred_view = predic.copy()
+            pred_view = pd.DataFrame(predic)
             
             pred_view.columns = ['Prediction']
             
