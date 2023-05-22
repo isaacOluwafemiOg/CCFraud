@@ -24,10 +24,11 @@ def train_model():
     return (X_test,test,model,train_score,test_score)
 
 @st.cache_data
-def predict_test(model,pdata):
-    prediction=model.predict(pdata)
+def predict_test(pdata):
+    model =pickle.load(open('trained_model.pkl','rb'))
+    pred = model.predict(pdata)
     
-    return (prediction)
+    return (pred)
     
     
 @st.cache_data
@@ -67,12 +68,12 @@ def main():
             q =pdata.shape
             q
             with st.spinner("Predicting... Please wait."):
-                prediction = predict_test(model,pdata)
+                predic = predict_test(pdata)
 
             st.subheader('Results')
-            prediction
+            predic
 
-            f1= f1_score(test['is_fraud'],prediction)
+            f1= f1_score(test['is_fraud'],predic)
             st.subheader('F1 Score')
             f1
         st.write('''***''')
