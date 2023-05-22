@@ -67,7 +67,7 @@ def train_model(model,data):
     tr_pred = model.predict(X_train)
     te_pred = model.predict(X_test)
     train_score = f1_score(y_train,tr_pred)
-    test_score = f1_score(y_train,te_pred)
+    test_score = f1_score(y_test,te_pred)
 
     return (model,train_score,test_score)
 
