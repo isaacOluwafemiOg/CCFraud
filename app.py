@@ -7,7 +7,6 @@ import pickle
 import xgboost
 
 
-@st.cache_data
 def train_model():
     data = pd.read_csv('better_train.csv')
     model =pickle.load(open('untrained_model.pkl','rb'))
