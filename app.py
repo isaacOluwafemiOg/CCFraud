@@ -5,6 +5,19 @@ from sklearn.metrics import f1_score
 import sklearn
 import pickle
 
+@st.cache
+def train_model(model,data):
+    X = data.drop('is_fraud',axis=1)
+    y = data['is_fraud']
+    X_train,X_test,y_train,y_test= sklearn.model_selection.train_test_split(X,
+    y,test_size=0.3,random_state=2)
+    model = model.fit(X_train,y_train)
+    tr_pred = model.predict(X_train)
+    te_pred = model.predict(X_test)
+    train_score = f1_score(y_train,tr_pred)
+    test_score = f1_score(y_test,te_pred)
+    return (model,train_score,test_score)
+
 
 
 def main():
@@ -57,19 +70,7 @@ def main():
         else:
             st.write('No dataset Uploaded')
         
-@st.cache
-def train_model(model,data):
-    X = data.drop('is_fraud',axis=1)
-    y = data['is_fraud']
-    X_train,X_test,y_train,y_test= sklearn.model_selection.train_test_split(X,
-    y,test_size=0.3,random_state=2)
-    model = model.fit(X_train,y_train)
-    tr_pred = model.predict(X_train)
-    te_pred = model.predict(X_test)
-    train_score = f1_score(y_train,tr_pred)
-    test_score = f1_score(y_test,te_pred)
 
-    return (model,train_score,test_score)
 
 
 
