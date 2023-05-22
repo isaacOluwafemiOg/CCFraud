@@ -57,7 +57,8 @@ def main():
         st.header('Predicting Default Test Data')
         st.subheader('Dataset Preview')
         
-        test
+        for_view = test.drop('is_fraud',axis=1)
+        for_view
 
         if st.button("Predict on unseen test data above"):
             with st.spinner("Preparing data... Please wait."):
@@ -67,7 +68,11 @@ def main():
                 predic = predict_test(pdata)
 
             st.subheader('Results')
-            predic
+            pred_view = predic.copy()
+            
+            pred_view.columns = ['Prediction']
+            
+            pred_view['Prediction'] = np.where(pred_view['Prediction']==0,'Genuine','Fraud')
 
             #f1= f1_score(test['is_fraud'],predic)
             #st.subheader('F1 Score')
