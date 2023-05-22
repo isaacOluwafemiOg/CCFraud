@@ -47,9 +47,7 @@ def main():
     st.write('train f1 score:', trainscore)
     st.write('test f1 score:', testscore)
 
-    model_filename = "trained_model.pkl"
-    with open(model_filename, "wb") as f:
-        pickle.dump(model, f)
+  
 
     if page == 'Default':
         st.header('Predicting Default Test Data')
