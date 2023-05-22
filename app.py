@@ -41,7 +41,7 @@ def main():
     st.title('Credit Card Fraud Predictor')
     
     with st.spinner("Unpacking the model... Please wait."):
-        preprocessor,model,trainscore,testscore = train_model()
+        test,preprocessor,model,trainscore,testscore = train_model()
     st.write('train f1 score:', trainscore)
     st.write('test f1 score:', testscore)
 
