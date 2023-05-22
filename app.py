@@ -59,12 +59,12 @@ def main():
             with st.spinner("Predicting... Please wait."):
                 prediction = predict_test(preprocessor,test)
 
-        st.subheader('Results')
-        prediction
+            st.subheader('Results')
+            prediction
 
-        f1= f1_score(test['is_fraud'],prediction)
-        st.subheader('F1 Score')
-        f1
+            f1= f1_score(test['is_fraud'],prediction)
+            st.subheader('F1 Score')
+            f1
         st.write('''***''')
 
 
