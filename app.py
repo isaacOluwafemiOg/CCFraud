@@ -21,7 +21,7 @@ def train_model():
     te_pred = model.predict(X_test)
     train_score = f1_score(y_train,tr_pred)
     test_score = f1_score(y_test,te_pred)
-    return (test,model,train_score,test_score)
+    return (X_test,test,model,train_score,test_score)
 
 @st.cache_data
 def predict_test(model,pdata):
@@ -48,12 +48,12 @@ def main():
     st.title('Credit Card Fraud Predictor')
     
     with st.spinner("Unpacking the model... Please wait."):
-        test,model,trainscore,testscore = train_model()
+        X_test,test,model,trainscore,testscore = train_model()
     st.write('train f1 score:', trainscore)
     st.write('test f1 score:', testscore)
 
-  
-
+    v= X_test.shape
+    v
     if page == 'Default':
         st.header('Predicting Default Test Data')
         st.subheader('Dataset Preview')
@@ -63,6 +63,9 @@ def main():
         if st.button("Predict on unseen test data above"):
             with st.spinner("Preparing data... Please wait."):
                 pdata = prepare(test)
+                
+            q =pdata.shape
+            q
             with st.spinner("Predicting... Please wait."):
                 prediction = predict_test(model,pdata)
 
