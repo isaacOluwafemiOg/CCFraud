@@ -9,8 +9,8 @@ import xgboost
 
 @st.cache_data
 def train_model():
-    data = pd.read_csv('train.csv')
-    model =pickle.load(open('ccFraud.pkl','rb'))
+    data = pd.read_csv('better_train.csv')
+    model =pickle.load(open('untrained.pkl','rb'))
     preprocessor = pickle.load(open('process.pkl','rb'))
     X = data.drop('is_fraud',axis=1)
     y = data['is_fraud']
@@ -40,7 +40,7 @@ def main():
     st.write('train score:', trainscore)
     st.write('test score:', testscore)
 
-    model_filename = "trained_model.pkl"
+    model_filename = "b_trained_model.pkl"
     with open(model_filename, "wb") as f:
         pickle.dump(model, f)
 
