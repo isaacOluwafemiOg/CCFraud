@@ -12,7 +12,7 @@ def train_model():
     test = pd.read_csv('test.csv')
     data = pd.read_csv('train.csv')
     model =pickle.load(open('trained_model.pkl','rb'))
-    preprocessor = pickle.load(open('process.pkl','rb'))
+    
     X = data.drop('is_fraud',axis=1)
     y = data['is_fraud']
     X_train,X_test,y_train,y_test= sklearn.model_selection.train_test_split(X,
@@ -21,10 +21,12 @@ def train_model():
     te_pred = model.predict(X_test)
     train_score = f1_score(y_train,tr_pred)
     test_score = f1_score(y_test,te_pred)
-    return (test,preprocessor,model,train_score,test_score)
+    return (test,model,train_score,test_score)
 
 @st.cache_data
-def predict_test(preprocessor,test):
+def predict_test():
+    test = pd.read_csv('test.csv')
+    preprocessor = pickle.load(open('process.pkl','rb'))
     X = test.drop('is_fraud',axis=1)
     data = pd.DataFrame(preprocessor.fit_transform(X))
     prediction=model.predict(data)
@@ -41,7 +43,7 @@ def main():
     st.title('Credit Card Fraud Predictor')
     
     with st.spinner("Unpacking the model... Please wait."):
-        test,preprocessor,model,trainscore,testscore = train_model()
+        test,model,trainscore,testscore = train_model()
     st.write('train f1 score:', trainscore)
     st.write('test f1 score:', testscore)
 
@@ -57,7 +59,7 @@ def main():
 
         if st.button("Predict on unseen test data above"):
             with st.spinner("Predicting... Please wait."):
-                prediction = predict_test(preprocessor,test)
+                prediction = predict_test()
 
             st.subheader('Results')
             prediction
