@@ -77,11 +77,7 @@ def main():
             st.subheader('Dataset Preview')
             data
 
-            testh = pd.DataFrame(preprocessor.fit_transform(data))
-            prediction=model.predict(testh)
-
-            st.subheader('Results')
-            prediction
+ 
 
         else:
             st.write('No dataset Uploaded')
