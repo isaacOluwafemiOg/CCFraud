@@ -9,6 +9,7 @@ import xgboost
 
 @st.cache_data
 def train_model():
+    test = pd.read_csv('test.csv')
     data = pd.read_csv('train.csv')
     model =pickle.load(open('trained_model.pkl','rb'))
     preprocessor = pickle.load(open('process.pkl','rb'))
@@ -20,12 +21,17 @@ def train_model():
     te_pred = model.predict(X_test)
     train_score = f1_score(y_train,tr_pred)
     test_score = f1_score(y_test,te_pred)
-    return (preprocessor,model,train_score,test_score)
+    return (test,preprocessor,model,train_score,test_score)
 
-
+@st.cache_data
+def predict_test(preprocessor,test):
+    X = test.drop('is_fraud',axis=1)
+    data = pd.DataFrame(preprocessor.fit_transform(X))
+    prediction=model.predict(data)
+    
+    return (prediction
 
 def main():
-
     
     st.sidebar.header('Dataset to use')
     page = st.sidebar.selectbox("Data Input", ['Default','User Upload'])
@@ -46,12 +52,12 @@ def main():
     if page == 'Default':
         st.header('Predicting Default Test Data')
         st.subheader('Dataset Preview')
-        test = pd.read_csv('test.csv')
+        
         test
 
-        X = test.drop('is_fraud',axis=1)
-        data = pd.DataFrame(preprocessor.fit_transform(X))
-        prediction=model.predict(data)
+        if st.button("Predict on unseen test data above"):
+            with st.spinner("Predicting... Please wait."):
+                prediction = predict_test(preprocessor,test)
 
         st.subheader('Results')
         prediction
