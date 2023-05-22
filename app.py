@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from pycaret.classification import predict_model,load_model
+from sklearn.metrics import f1_score
+import sklearn
+import pickle
+
 
 
 def main():
@@ -9,19 +12,30 @@ def main():
     
     st.sidebar.header('Dataset to use')
     page = st.sidebar.selectbox("Data Input", ['Default','User Upload'])
-    model =load_model('ccFraud')
+    model =pickle.load(open('ccFraud.pkl','rb'))
+    preprocessor = pickle.load(open('process.pkl','rb'))
+    traincsv = pd.read_csv('train.csv')
+
+    model,trainscore,testscore = train_model(model,traincsv)
+    st.write('train score:', trainscore)
+    st.write('test score:', testscore)
 
     if page == 'Default':
         st.title('Predicting Default Test Data')
         st.subheader('Dataset Preview')
-        test = pd.read_csv('test.csv').head(10)
+        test = pd.read_csv('test.csv')
         test
 
-        prediction=predict_model(model,test)
+        X = test.drop('is_fraud',axis=1)
+        data = pd.DataFrame(preprocessor.fit_transform(X))
+        prediction=model.predict(data)
 
         st.subheader('Results')
         prediction
-        
+
+        f1= f1_score(test['is_fraud'],prediction)
+        st.subheader('F1 Score')
+        f1
         st.write('''***''')
 
 
@@ -34,7 +48,8 @@ def main():
             st.subheader('Dataset Preview')
             data
 
-            prediction=predict_model(model,data)
+            testh = pd.DataFrame(preprocessor.fit_transform(data))
+            prediction=model.predict(testh)
 
             st.subheader('Results')
             prediction
@@ -42,7 +57,22 @@ def main():
         else:
             st.write('No dataset Uploaded')
         
-    
+@st.cache
+def train_model(model,data):
+    X = data.drop('is_fraud',axis=1)
+    y = data['is_fraud']
+    X_train,X_test,y_train,y_test= sklearn.model_selection.train_test_split(X,
+    y,test_size=0.3,random_state=2)
+    model = model.fit(X_train,y_train)
+    tr_pred = model.predict(X_train)
+    te_pred = model.predict(X_test)
+    train_score = f1_score(y_train,tr_pred)
+    test_score = f1_score(y_train,te_pred)
+
+    return (model,train_score,test_score)
+
+
+
 
 if __name__ == '__main__':
     main()
