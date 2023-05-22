@@ -18,8 +18,7 @@ def train_model():
     return (X_test,test)
 
 @st.cache_data
-def predict_test(pdata):
-    model =pickle.load(open('b_trained_model.pkl','rb'))
+def predict_test(pdata,model):
     pred = model.predict(pdata)
     
     return (pred)
@@ -79,7 +78,7 @@ def main():
                 pdata = prepare(test)
                 
             with st.spinner("Predicting... Please wait."):
-                predic = predict_test(pdata)
+                predic = predict_test(pdata,model)
 
             st.subheader('Results')
             predic
