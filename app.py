@@ -29,7 +29,7 @@ def predict_test(preprocessor,test):
     data = pd.DataFrame(preprocessor.fit_transform(X))
     prediction=model.predict(data)
     
-    return (prediction
+    return (prediction)
 
 def main():
     
