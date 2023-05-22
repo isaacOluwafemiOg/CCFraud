@@ -24,7 +24,7 @@ def train_model():
     return (test,model,train_score,test_score)
 
 @st.cache_data
-def predict_test():
+def predict_test(model):
     test = pd.read_csv('test.csv')
     preprocessor = pickle.load(open('process.pkl','rb'))
     X = test.drop('is_fraud',axis=1)
@@ -57,7 +57,7 @@ def main():
 
         if st.button("Predict on unseen test data above"):
             with st.spinner("Predicting... Please wait."):
-                prediction = predict_test()
+                prediction = predict_test(model)
 
             st.subheader('Results')
             prediction
