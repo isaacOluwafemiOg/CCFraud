@@ -6,7 +6,6 @@ import sklearn
 import pickle
 import xgboost
 
-@st.cache
 def train_model(model,data):
     X = data.drop('is_fraud',axis=1)
     y = data['is_fraud']
