@@ -36,7 +36,7 @@ def training_model():
     te_pred = model.predict(X_test)
     train_score = f1_score(y_train,tr_pred)
     test_score = f1_score(y_test,te_pred)
-    return (preprocessor,model,train_score,test_score)  
+    return (model,train_score,test_score)  
     
 @st.cache_data
 def prepare(test):
