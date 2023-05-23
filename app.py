@@ -5,7 +5,9 @@ from sklearn.metrics import f1_score
 import sklearn
 import pickle
 import xgboost
+from PIL import Image
 
+imag=Image.open('dataware.jpg')
 
 @st.cache_data
 def train_model():
@@ -42,6 +44,7 @@ def prepare(test):
 def main():
     
     st.sidebar.header('Dataset to use')
+    st.sidebar.image(imag,width=80)#,use_column_width=True)
     page = st.sidebar.selectbox("Data Input", ['Default','User Upload'])
     
     
