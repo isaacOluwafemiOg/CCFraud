@@ -46,7 +46,10 @@ def main():
     st.sidebar.header('Dataset to use')
     st.sidebar.image(imag,width=80)#,use_column_width=True)
     page = st.sidebar.selectbox("Data Input", ['Default','User Upload'])
-    
+    st.sidebar.markdown('''
+    ---
+    Product of [Dataware Tech](https://mydataware.com)
+    ''')
     
     
     st.title('Credit Card Fraud Predictor')
