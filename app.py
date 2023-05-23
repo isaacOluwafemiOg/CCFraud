@@ -42,9 +42,9 @@ def prepare(test):
     return (data)
 
 def main():
-    
-    st.sidebar.header('Dataset to use')
     st.sidebar.image(imag,width=80)#,use_column_width=True)
+    st.sidebar.header('Dataset to use')
+    
     page = st.sidebar.selectbox("Data Input", ['Default','User Upload'])
     st.sidebar.markdown('''
     ---
